@@ -28,6 +28,7 @@ public class charu {
 			if (j != i - 1) {
 				// 将比a[i]大的数据向后移
 				int temp = arr[i];
+				// k：当前索引的前一个元素
 				for (k = i - 1; k > j; k--)
 					// 将前面的值往后移
 					arr[k + 1] = arr[k];
