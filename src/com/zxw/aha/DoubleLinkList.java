@@ -1,17 +1,20 @@
 package com.zxw.aha;
 
 /**
- * 链表,是一种存储结构
+ * 双端链表
  * 
  * @author zxw
  *
  */
-public class LinkList {
+public class DoubleLinkList {
 	// 头结点
 	private Node first;
+	// 尾节点
+	private Node last;
 
-	public LinkList() {
+	public DoubleLinkList() {
 		first = null;
+		last = null;
 	}
 
 	/**
@@ -19,6 +22,12 @@ public class LinkList {
 	 */
 	public void insertFirst(int value) {
 		Node node = new Node(value);
+		// 从头部进行插入
+		// 头结点是否为空,如果为空则设置尾节点为新添加的节点
+		// 第一个插入的元素既是头结点也是尾节点  
+		if (isEmpty()) {
+			last = node;
+		}
 		// 将头结点赋值指向当前节点指针域
 		// 第一次插入时，子节点为空，队尾
 		node.next = first;
@@ -28,12 +37,38 @@ public class LinkList {
 	}
 
 	/**
+	 * 从尾节点进行插入
+	 * 
+	 * @return
+	 */
+	public void insertLast(int value) {
+		Node node = new Node(value);
+		// 尾节点是否为空
+		// 如果为空，则设置头节点为新添加的节点
+		if (isEmpty()) {
+			first = node;
+		} else {
+			// 将尾节点的指针指向新节点
+			last.next = node;
+		}
+		// 将最后一个节点的指针移向新节点
+		last = node;
+	}
+
+	public boolean isEmpty() {
+		return (first == null ? true : false);
+	}
+
+	/**
 	 * 删除节点,在头结后进行删除
 	 */
 	public Node deleteFirst() {
 		// 获取当前节点的子节点
-		Node tmp = first.next;
+		Node tmp = first;
 		// 将当前节点的子节点赋值到该节点上
+		if (first.next == null) {
+			last = null;
+		}
 		first = tmp;
 		return tmp;
 	}
@@ -70,7 +105,7 @@ public class LinkList {
 		if (current == first) {
 			// 将节点的下一个值赋值给该节点
 			first = first.next;
-		}else{
+		} else {
 			// 如果不是第一个节点
 			// 将当前节点的下一个值，赋值给上一个节点的下一个值
 			previous.next = current.next;

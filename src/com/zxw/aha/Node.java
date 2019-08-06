@@ -9,7 +9,7 @@ public class Node {
 	}
 	
 	public void display() {
-		System.out.println(data+" ");
+		System.out.print(data+" ");
 	}
 
 }
