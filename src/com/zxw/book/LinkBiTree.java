@@ -1,5 +1,8 @@
 package com.zxw.book;
 
+import java.util.LinkedList;
+import java.util.Queue;
+
 /**
  * 不带头结点二叉树
  * 
@@ -106,6 +109,67 @@ public class LinkBiTree<E> {
 			return search(val, p.getRchild());
 		}
 		return null;
+	}
+
+	// 中序遍历:LDR
+	public void inorder(Node<E> node) {
+		if (isEmpty()) {
+			System.out.println("tree is empty");
+			return;
+		}
+		if (node != null) {
+			inorder(node.getLchild());
+			System.out.print(node.getData() + " ");
+			inorder(node.getRchild());
+		}
+	}
+
+	// 先序遍历:OLR
+	public void preorder(Node<E> node) {
+		if (isEmpty()) {
+			return;
+		}
+		if (node != null) {
+			System.out.print(node.getData() + " ");
+			preorder(node.getLchild());
+			preorder(node.getRchild());
+		}
+	}
+
+	// 后序遍历：LRD
+	public void postorder(Node<E> node) {
+		if (isEmpty()) {
+			return;
+		}
+		if (node != null) {
+			preorder(node.getLchild());
+			preorder(node.getRchild());
+			System.out.print(node.getData() + " ");
+		}
+	}
+
+	public void levelOrder(Node<E> node) {
+		if (isEmpty()) {
+			return;
+		}
+		// 设置一个队列保存层序遍历的结点
+		Queue<Node<E>> q = new LinkedList<Node<E>>();
+		q.add(node);
+		// 队列非空，结点没有处理完
+		while (!q.isEmpty()) {
+			// 结点出队
+			Node<E> tmp = q.poll();
+			// 处理当前结点
+			System.out.print(tmp.getData() + " ");
+			// 将当前结点的左孩子结点入队
+			if (tmp.getLchild() != null) {
+				q.add(tmp.getLchild());
+			}
+			if(tmp.getRchild()!=null){
+				// 将当前结点的右孩子入队
+				q.add(tmp.getRchild());
+			}
+		}
 	}
 
 	// 判断是否为是叶子结点
