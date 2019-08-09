@@ -38,17 +38,23 @@ public class HuffmanTree {
 		int[] c = new int[26]; // 统计出26个小写字符
 		// 统计出各字符出现的频率
 		for (int i = 0; i < str.length(); i++) {
+			// 返回 char指定索引处的值。 
+			char d = str.charAt(i);
+			// 得到字符所在的位置索引，例c[25]==z
+			int j = c[str.charAt(i) - 'a'];
+			// ascil码值相减在26范围内
 			c[str.charAt(i) - 'a']++;
 		}
 		int cnt = 0;
-		// 统计报文中字符数量s
+		// 统计报文中字符数量
 		for (int i = 0; i < c.length; i++) {
 			if (c[i] > 0) {
 				cnt++;
 			}
 		}
-
+		// 叶子结点数目
 		this.leafNum = cnt;
+		// 数组大小为2n-1
 		data = new HNode[this.leafNum * 2 - 1];
 		for (int i = 0; i < 2 * leafNum - 1; i++) {
 			data[i] = new HNode();
@@ -115,7 +121,7 @@ public class HuffmanTree {
 				sum += preorder(data[root.getLchild()], code + "0");
 			}
 			if (root.getRchild() != -1) {
-				sum += preorder(data[root.getLchild()], code + "0");
+				sum += preorder(data[root.getRchild()], code + "1");
 			}
 		}
 		return sum;
