@@ -1,0 +1,434 @@
+# 数据结构和算法
+
+## 1.算法时间复杂度(算法的时间量度)
+
+1. 定义
+   - T(n):语句总的执行次数->是关于问题规模n的函数
+   - 分析T(n)随n的变化情况并确定T(n)的数量级
+   - T(n) = O(f(n)):O表示在最糟糕情况下的运行时间
+   - 随问题规模n的增大，算法执行时间的增长率和f(n)的增长率相同，称作算法的渐近时间复杂度，简称为时间复杂度。其中f(n)是问题规模n的某个函数。
+   - 个人理解：总的执行次数最坏等于函数执行次数
+2. 推导大O阶方法
+   - 用常数1取代运行时间中的所有加法函数
+   - 在修改后的运行次数函数中，只保留最高阶项
+   - 如果最高阶项存在且不是1，则去除与这个项相乘的常数
+   - 得到的最后结果就是大O阶
+   - O(1),O(n),O(n^2)
+3. 常用的时间复杂度所耗费的时间
+   - O(1)<O(logn)<(n)<O(nlogn)<O(n^2)<O(n^3)<O(2^n)<O(n!)<O(n^n)
+
+## 2.算法的空间复杂度
+
+1. 定义
+   - 算法的空间复杂度通过计算算法所需的存储空间实现
+   - S(n) = O(f(n)),其中n为问题规模，f(n)为语句关于n所占存储空间的函数
+
+## 3.线性表
+
+### 3.1顺序存储结构
+
+1. 优点
+   - 无须为表中元素之间的逻辑关系而增加额外的存储空间
+   - 可以快速地存取表中任意位置的元素
+   - 插入和存储复杂度为O(1)
+2. 缺点
+   - 插入和删除操作需要移动大量元素
+   - 当线性表长度变化较大时，难以确定存储空间的容量
+   - 容易造成存储空间的碎片
+   - 删除和更新复杂度为O(n)
+
+### 3.2链式存储结构
+
+## 4.队列
+
+1. 定义
+   - 先进先出
+
+## 5.栈
+
+1. 定义
+
+   - ```java
+     package com.zxw.aha;
+     
+     public class MyStack {
+     
+     	public static void main(String[] args) {
+     		MyStack ms = new MyStack(4);
+     		ms.push(2);
+     		ms.push(4);
+     		ms.push(1);
+     		ms.push(3);
+     		System.out.println(ms.isEmpty());
+     		System.out.println(ms.isFull());
+     		int[] arr2 = ms.getArr();
+     		for (int i = 0; i < arr2.length; i++) {
+     			System.out.println(arr2[i]);
+     		}
+     	}
+     
+     	int[] arr;
+     	int top;
+     
+     	public MyStack() {
+     		arr = new int[10];
+     		top = -1;
+     	}
+     
+     	public MyStack(int maxsize) {
+     		arr = new int[maxsize];
+     		top = -1;
+     	}
+     
+     	/**
+     	 * 入栈
+     	 * 
+     	 * @param value
+     	 */
+     	public void push(int value) {
+     		arr[++top] = value;
+     	}
+     
+     	/**
+     	 * 出栈
+     	 * 
+     	 * @return
+     	 */
+     	public int pop() {
+     		return arr[top--];
+     	}
+     
+     	/**
+     	 * 查找数据
+     	 * 
+     	 * @return
+     	 */
+     	public int peek() {
+     		return arr[top];
+     	}
+     
+     	/**
+     	 * 判断是否为空
+     	 */
+     	public boolean isEmpty() {
+     		return top == -1;
+     	}
+     
+     	public boolean isFull() {
+     		return top == arr.length - 1;
+     	}
+     }
+     ```
+
+     
+
+## 6.递归和分治思想
+
+1. 定义
+   - 直接调用自己或通过一系列的调用语句间接地调用自己的函数。每个递归定义必须至少有一个条件，当满足条件时递归不再进行，即函数不再调用自身而是返回
+2. 区别
+   - 迭代使用的是循环结构
+   - 递归使用的是选择结构
+
+### 6.1斐波那契数列的递归实现
+
+```java
+public static void main(String[] args) {
+    // 主体部分进行循环
+		for (int i = 1; i < 41; i++) {
+			System.out.print("当前数为:"+i+",递归数为:");
+			System.out.print(feibo(i));
+			System.out.println("");
+		}
+	}
+
+	public static int feibo(int num) {
+        // 对前两个数进行判断
+		if (num == 1 || num == 0) {
+			return 1;
+		} else {
+            // 前前个数加前一个数，等于当前数的值
+			return feibo(num - 2) + feibo(num - 1);
+		}
+
+	}
+```
+
+### 6.2反向输出字符串
+
+```java
+public static void reverseString(String str) {
+		if (str.length() == 1) {
+			System.out.print(str);
+		} else {
+            // 截取字符串从开始到导数第二个，假设长度为5，则截取1-4的值(不包含最后一个),[0,x),后面不包含
+			String str1 = str.substring(0, str.length() - 1);
+			System.out.println(str1+"----");
+            // 获取最后一个字符串
+			String str2 = str.substring(str.length() - 1);
+			System.out.println(str2+"!!");
+            // 将截取后的字符串重新截取
+			reverseString(str1);
+		}
+	}
+```
+
+### 6.3折半查找
+
+1. 基本思想
+   - 减小查找序列的长度，分而治之地进行关键字的查找
+2. 过程
+   - 先确定待查找记录的所在范围，然后逐渐缩小这个范围，直到找到该记录或查找失败为止。
+
+### 6.4汉诺塔
+
+```java
+/**
+	 * 要将最大的圆盘移动到柱子3上
+	 * 柱子1只剩最大的圆盘
+	 * 柱子3为空
+	 * 
+	 * @param n      圆盘个数
+	 * @param start  柱子1
+	 * @param temp   柱子2
+	 * @param target 柱子3
+	 */
+	public static void move(int n, char start, char temp, char target) {
+		if (n == 0) {
+			return;
+		}
+		if (n == 1) {
+			System.out.println(start + "------->" + target);
+		} else {
+			move(n - 1, start, target, temp);
+			System.out.println(start + "------->" + target);
+			move(n - 1, temp, start, target);
+		}
+	}
+```
+
+### 6.4皇后问题
+
+回溯算法的典型例题
+
+## 7.字符串
+
+### 7.1 BF算法
+
+1. 定义
+
+   - 暴力匹配（BF）算法是普通的模式匹配算法，BF算法的思想就是将目标串S的第一个字符与模式串T的第一个字符进行匹配，若相等，则继续比较S的第二个字符和T的第二个字符；若不相等，则比较S的第二个字符和T的第一个字符，依次比较，直到得出最后的匹配结果。
+   - 当第一个字符不相同时j也会继续向后比较，比如例子中的“abcdefg”和“def”，当“a”和“d”不相同时，则明显之后的两个字符及时相等也不是相同的子串。
+   - 每次j下标都要回到0号下标，当主串和字串匹配失败时，主串进行回溯会影响效率，回溯之后，主串与字串有些部分比较是没有必要的 .
+   - 这种简单的丢弃前面的匹配信息的算法，造成了极大的浪费和底下的匹配效率 
+   - 最坏O(n*m)
+
+2. ```java
+   /**
+   	 * 字符串匹配，寻找t是否在s中出现
+   	 * 当有一个不匹配的时候，回溯到目标串的下个字符
+   	 * @param S
+   	 * @param T
+   	 * @param pos
+   	 * @return
+   	 */
+   	public static int BfFind(String S, String T, int pos) {
+   		char[] arr1 = S.toCharArray();
+   		char[] arr2 = T.toCharArray();
+   		int i = pos;
+   		int j = 0;
+   		while (i < arr1.length && j < arr2.length) {
+   			if (arr1[i] == arr2[j]) {
+   				i++;
+   				j++;
+   			} else {
+   				// 当匹配中断时,从中断的当前位置重新开始匹配
+   				i = i - j + 1;
+   				j = 0;
+   			}
+   		}
+   		// 返回模式串在目标串中出现的位置,第一个字符的位置
+   		return j == arr2.length ? i-j:-1;
+   	}
+   ```
+
+### 7.2 KMP算法
+
+1. 定义
+
+   - 在KMP算法中，对于每一个模式串都会事先计算出模式串的内部匹配信息，在匹配失败时最大的移动模式串，以减少匹配次数，这样就很好的解决了BF算法的缺陷
+   - 比如，当匹配失败后，最好是能够将模式字串尽量的右移和主串进行匹配，右移的距离在KMP算法中是这样计算的：在已经匹配的字串中，找到最长的相同的前缀和后缀，然后移动使他们重叠，这个位置就是j要回退的位置，这样j就不用每一次都回到0号位置了，每一次j回退的位置存储在一个数组里，称之为next数组 
+
+2. 核心
+
+   - 避免不必要的回溯
+
+   - 由模式串决定，不是由目标串决定
+
+   - next[j]代表了T的前j个字符组成的子串中，其前缀和后缀的最长公共串的长度。例如如果next [j] = k，代表j 之前的字符串中有最大长度为k 的相同前缀后缀。
+
+   - ```
+     next[0]=-1, next[1]=0。
+     在求解next[j]时，令k=next[j-1]，
+     比较T[j-1]与T[k]的值，
+     	a.若T[j-1]等于T[k]，则next[j]=k+1。
+     	b.若T[j-1]不等于T[k]，令k=next[k]，若k等于-1，则next[j]=0，否则跳至3。
+     ```
+
+   - ```
+     下面以模式串T=“abaabcac”为例，给出求next数组的过程：
+     1.next[0]=-1, next[1]=0。
+     2.当j=2时，k=next[j-1]=next[1]=0，由于T[j-1]=T[1]=‘b’，T[k]=T[0]=‘a’，T[j-1]不等于T[k]，令k=next[k]=next[0]=-1，因此next[2]=0。
+     3.当j=3时，k=next[j-1]=next[2]=0，由于T[j-1]=T[2]=‘a’，T[k]=T[0]=‘a’，T[j-1]等于T[k]，因此next[3]=k+1=1。
+     4.当j=4时，k=next[j-1]=next[3]=1，由于T[j-1]=T[3]=‘a’，T[k]=T[1]=‘b’，T[j-1]不等于T[k]，令k=next[k]=next[1]=0。此时T[k]=T[0]=‘a’，T[j-1]等于T[k]，因此next[3]=k+1=1。
+     5.当j=5时，k=next[j-1]=next[4]=1，由于T[j-1]=T[4]=‘b’，T[k]=T[1]=‘b’，T[j-1]等于T[k]，因此next[5]=k+1=2。
+     6.当j=6时，k=next[j-1]=next[5]=2，由于T[j-1]=T[5]=‘c’，T[k]=T[2]=‘a’，T[j-1]不等于T[k]，令k=next[k]=next[2]=0。此时T[k]=T[0]=‘a’，T[j-1]不等于T[k]，再令k=next[k]=next[0]=-1，因此next[6]=0。
+     7.当j=7时，k=next[j-1]=next[6]=0，由于T[j-1]=T[6]=‘a’，T[k]=T[0]=‘a’，T[j-1]等于T[k]，因此next[7]=k+1=1。
+     ```
+
+   - ```java
+     package com.zxw.yuC;
+     
+     public class kmp {
+     	public static void main(String[] args) {
+     		System.out.println(kmpMatch("abcabaabaabcacb", "cb"));
+     	}
+     
+     	// 求出next数组
+     	/**
+     	 * 求解next[j]是关键 令k=next[j-1]
+     	 * 
+     	 * @param t
+     	 * @return
+     	 * @next[j] : 当前字符之前的字符串中，有多大长度的相同前缀后缀。例如如果next [j] = k，代表j 之前的字符串中有最大长度为k 的相同前缀后缀。
+     	 */
+     	public static int[] getNextArray(char[] tmp) {
+     		int[] next = new int[tmp.length];
+     		next[0] = -1;
+     		next[1] = 0;
+     		int k;
+     		// j:模板字符串的索引
+     		// 否则跳至3。
+     		for (int j = 2; j < tmp.length; j++) {
+     			// k的值为前一个数的next值
+     			k = next[j - 1];
+     			while (k != -1) {
+     				// 比较T[j-1]与T[K]的值
+     				if (tmp[j - 1] == tmp[k]) {
+     					// 若T[j-1]等于T[k]，则next[j]=k+1。
+     					next[j] = k + 1;
+     					break;
+     				} else {
+     					// 若T[j-1]不等于T[k]，令k=next[k]
+     					k = next[k];
+     				}
+     				// 若k等于-1，则next[j]=0
+     				next[j] = 0;
+     			}
+     		}
+     		return next;
+     	}
+     
+     	// KMP匹配过程
+     	/**
+     	 * 对主串s和模板串t进行KMP模式匹配
+     	 * 
+     	 * @param s
+     	 * @param t
+     	 * @return 若匹配成功，返回t在s中的位置（第一个相同字符对应的位置），若匹配失败，返回-1
+     	 */
+     	public static int kmpMatch(String s, String t) {
+     		char[] s_arr = s.toCharArray();
+     		char[] t_arr = t.toCharArray();
+     		int i = 0, j = 0;
+     		int[] next = getNextArray(t_arr);
+     		while (i < s_arr.length && j < t_arr.length) {
+     			// 当模式串T匹配至第j个字符时匹配失败，i指针不变，将j指针置为next[j]的值，若j的值为-1，则将i和j同时加1。随后继续进行逐个的比较。
+     			// 如果j=-1，表示当前字符匹配成功
+     			if (j == -1 || s_arr[i] == t_arr[j]) {
+     				i++;
+     				j++;
+     			} else {
+     				// 字符匹配失败，模式串T相对于文本串S向右移动了j-next[j]位
+     				// 模式串向右移动的位数为：失配字符所在位置（j） - 失配字符对应的next值，即移动的实际位数为：j - next[j]（表示当前指针的位置向右移动的位数，例如当前指针在a[6]位置上，向右移动4位，则到达a[2]上），且此值大于等于1。
+     				j = next[j];
+     			}
+     		}
+     		if (j == t_arr.length) {
+     			return i - j;
+     		} else {
+     			return -1;
+     		}
+     	}
+     }
+     ```
+
+   - 步骤
+
+     1. 寻找前缀后缀最长公共元素长度
+     2. 求next数组
+     3. 根据next数组进行匹配
+     4. ![1564482722551](C:\Users\zxw\AppData\Roaming\Typora\typora-user-images\1564482722551.png)
+
+   - 个人看法
+
+     - k：相同前缀后缀的长度
+     - next[]:考虑的是当前字符外的最长相同前缀后缀
+     - 根据《最大长度表》，失配时，模式串向右移动的位数为：已匹配字符数 - 失配字符的上一位字符所对应的最大长度值
+     - 而根据《next 数组》，失配时，模式串向右移动的位数 = 失配字符的位置 - 失配字符对应的next 值
+
+## 8.二叉树
+
+1. 定义
+   - 非线性的数据结构
+   - 由n(n>=0)个有限元素的集合,可以为空(空二叉树)
+   - 一个元素称作一个结点
+   - 二叉树是有序的，若左右数颠倒，则成为另一颗不同的二叉树
+2. 二叉树的五种形态
+   1. 空二叉树
+   2. 只有一个根结点的二叉树
+   3. 有根结点和左子树的二叉树
+   4. 有根结点和右子树的二叉树
+   5. 有根结点的左、右二叉树
+3. 概念
+   - 结点的度：结点的子树的个数，例如：两个左右子树，度数为2
+   - 叶结点(终端结点)：度为0的结点,即无子树
+   - 分支结点(非终端结点)：度不为0的结点
+   - 路径：结点ni是ni+1的父节点，n1,n2,***,nk称为一条n1~nk的路径。长度为k-1(包含了兄弟结点路径，所以长度-1)
+   - 层数:根结点为1
+   - 深度：最大层数称为树的深度
+   - 树的度：各结点的最大值,最大为2(左右子树)
+4. 性质
+   - 非空二叉树的第i层上最多有2^i-1个结点
+   - 深度为k的二叉树中，最多具有2^k-1个结点
+   - 对于一颗非空的二叉树，如果叶子结点数为n0,度数为2的结点数为n2,则有n0=n2+1
+   - 具有n个结点的完全二叉树的深度k为[1bn]+1
+5. 二叉树遍历的方法及递归实现
+   1. 先序遍历:DLR
+   2. 中序遍历:LDR
+   3. 后序遍历:LRD
+   4. 层序遍历:从二叉树的第一层开始，从下至下逐层遍历，同一层中，从左到右的顺序对结点逐个访问
+
+### 8.1 满二叉树
+
+1. 定义
+   - 所有分支结点都存在左子树和右子树，所有子结点都在同一层上(层数相同)
+
+### 8.2 完全二叉树
+
+1. 定义
+   - 满二叉树一定是完全二叉树，完全二叉树不定义是满二叉树
+   - 叶子结点(即度为0，没有子树)只能出现在最下层和次下层，且最下层的叶子结点集中在树的左部
+
+### 8.3二叉树的顺序存储
+
+1. 对于完全二叉树和满二叉树比较适用，其他的构造成完全二叉树即可
+
+### 8.4二叉树的链式存储
+
+1. 二叉链式表存储：左结点 中间数据 右结点（同双向链表）
+   - 无法由结点直接找打双亲
+   - 比顺序存储更剩空间
+2. 三叉链表存储：左结点 中间数据 右结点 指向双亲结点
+
+## 9.图
