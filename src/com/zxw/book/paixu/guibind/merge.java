@@ -34,7 +34,37 @@ public class merge {
 			h1 = l2 - 1; // 第1个有序表的结束位置
 			// 第2个有序表的结束位置
 			h2 = (l2 + len - 1 < data.length) ? 12 + len - 1 : data.length - 1;
-			
+			j = l2;
+			i = l1;
+			// 两个有序表中的记录没有排序
+			while ((i <= h1) && (j <= h2)) {
+				// 第1个有序表记录的关键码小于第2个有序表记录的关键码
+				if (data[i] <= data[j]) {
+					tmp[m++] = data[i++];
+				}
+				// 第2个有序表记录的关键码小于第1个有序记录的关键码
+				else {
+					tmp[m++] = data[j++];
+				}
+			}
+			// 第1个有序表中海油记录没有排序
+			while (i <= h1) {
+				tmp[m++] = data[i++];
+			}
+			// 第2个有序表中海油记录没有排序
+			while (j <= h2) {
+				tmp[m++] = data[j++];
+			}
+			l1 = h2 + 1;
+		}
+		i = l1;
+		// 原顺序表中海油记录没有排序
+		while (i < data.length) {
+			tmp[m++] = data[i++];
+		}
+		// 临时顺序表中的记录复制到原顺序，使原顺序表中的记录有序
+		for (i = 0; i < data.length; i++) {
+			data[i] = tmp[i];
 		}
 	}
 }
