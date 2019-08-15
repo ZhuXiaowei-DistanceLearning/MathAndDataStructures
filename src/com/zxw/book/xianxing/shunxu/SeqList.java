@@ -2,6 +2,8 @@ package com.zxw.book.xianxing.shunxu;
 
 import java.lang.reflect.Array;
 
+import com.zxw.book.xianxing.shunxu.yuesefu.JosephusNode;
+
 public class SeqList<E> implements ILinarList<E> {
 	private int maxsize; // 最大容量
 	private E[] data; // 数组，用于存储顺序表中的数据元素
@@ -45,14 +47,13 @@ public class SeqList<E> implements ILinarList<E> {
 
 	@Override
 	public E remove(int index) {
-		if (!isFull()) {
+		if (!isEmpty()) {
 			E oldValue = data[index];
 			for (int i = index; i < size - 1; i++) {
 				data[i] = data[i + 1];
 			}
 			// 清除最后一个元素
-			data[size] = null;
-			size--;
+			data[--size] = null;
 			return oldValue;
 		}
 		return null;
@@ -78,7 +79,14 @@ public class SeqList<E> implements ILinarList<E> {
 
 	@Override
 	public E get(int index) {
-		return null;
+		rangeCheck(index);
+		return data[index];
+	}
+
+	private void rangeCheck(int index) {
+		if(index<0||index>=size){
+			throw new IndexOutOfBoundsException();
+		}
 	}
 
 	@Override

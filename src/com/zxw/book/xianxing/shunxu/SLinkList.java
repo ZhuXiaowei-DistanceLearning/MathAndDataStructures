@@ -53,8 +53,24 @@ public class SLinkList<E> implements ILinarList<E> {
 
 	@Override
 	public E remove(int index) {
-		// TODO Auto-generated method stub
-		return null;
+		Node<E> current = start;
+		E oldValue = null;
+		if (index == 0) {
+
+		} else {
+			Node<E> previous = null;
+			int j = 1;
+			while (current.next != null && j <= index) {
+				previous = current;
+				current = current.next;
+				j++;
+			}
+			previous.next = current.next;
+			oldValue = current.item;
+			current = null;
+			size--;
+		}
+		return oldValue;
 	}
 
 	@Override
